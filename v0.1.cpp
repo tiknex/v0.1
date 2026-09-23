@@ -36,8 +36,14 @@ int main() {
         cin>>A.vardas;
         cout<<"iveskite studento pavarde"<<endl;
         cin>>A.pavarde;
-        cout<<"iveskite studento n.d. pazymi"<<endl;
-        cin>>A.nd_rez;
+        cout<<"iveskite studento n.d. pazymius, kai baigsite iveskite -1"<<endl;
+        while(true){
+            int reiksme;
+            cin>>reiksme;
+            if (reiksme == -1){
+                break;
+            }
+        }
         cout<<"iveskite studento egzamino pazymi"<<endl;
         cin>>A.egz_rez;
         studentai.push_back(A);
@@ -46,8 +52,8 @@ int main() {
     cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
     cout<<string(70, '-')<<endl;
     for(int i = 0; i < studentai.size(); i++){
-        double rezultatas1 = vidurkis(studentai[i].nd_rez, studentai[i].egz_rez);
-        double rezultatas2 = vidurkis(studentai[i].nd_rez, studentai[i].egz_rez);
+        double rezultatas1 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rez);
+        double rezultatas2 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rez);
         cout <<left<<setw(15)<<studentai[i].pavarde
              <<setw(15)<<studentai[i].vardas
              <<setw(15)<<rezultatas1
