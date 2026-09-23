@@ -29,8 +29,25 @@ double vidurkis(vector<int> nd, vector<int> egz) {
     }
     return suma / (nd.size()+egz.size());
 }
-double mediana(){
-    
+double mediana(vector<int> nd, vector<int> egz) {
+    vector<int> visos_reiksmes;
+
+    for (int i = 0; i < nd.size(); i++) {
+        visos_reiksmes.push_back(nd[i]);
+    }
+    for (int i = 0; i < egz.size(); i++) {
+        visos_reiksmes.push_back(egz[i]);
+    }
+
+    sort(visos_reiksmes.begin(), visos_reiksmes.end());
+
+    int n = visos_reiksmes.size();
+
+    if (n % 2 == 1) {
+        return visos_reiksmes[n / 2];
+    } else {
+        return (visos_reiksmes[n/2 - 1] + visos_reiksmes[n/2]) / 2.0;
+    }
 }
 
 int main() {
@@ -53,17 +70,13 @@ int main() {
         int kiekis_egz;
         cout << "kiek nd pazymiu norite sugeneruoti?" << endl;
         cin >> kiekis_nd;
-        cout<< "kiek egzamino pazymiu norite sugenruoti?" <<endl;
-        cin>>kiekis_egz;
 
     for (int j = 0; j < kiekis_nd; j++) {
         int atsitiktinis_skaicius_nd = rand() % 10 + 1;
         A.nd_rezultatai.push_back(atsitiktinis_skaicius_nd);
     }
-    for (int j = 0; j < kiekis_egz; j++) {
         int atsitiktinis_skaicius_egz = rand() % 10;
-        A.egz_rezultatai.push_back(atsitiktinis_skaicius_egz);
-    }   
+        A.egz_rezultatai.push_back(atsitiktinis_skaicius_egz);   
     } else {
     cout << "iveskite studento nd pazymius, kai baigsite iveskite -1" << endl;
     while (true) {
@@ -82,7 +95,7 @@ int main() {
     cout<<string(70, '-')<<endl;
     for(int i = 0; i < studentai.size(); i++){
         double rezultatas1 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        double rezultatas2 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
+        double rezultatas2 = mediana(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
         cout <<left<<setw(15)<<studentai[i].pavarde
              <<setw(15)<<studentai[i].vardas
              <<setw(15)<<rezultatas1
