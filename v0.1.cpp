@@ -14,12 +14,15 @@ using std::setw;
 struct Studentas{
     string vardas;
     string pavarde;
-    int nd_rez;
+    vector<int> nd_rezultatai;
     int egz_rez;
 };
-double vidurkis(int a, int b) {
-    double v = (a + b) / 2.0;  
-    return v;
+double vidurkis(vector<int> nd, int egz) {
+    double suma = egz; 
+    for(int i=0; i < nd.size(); i++){
+        suma += nd[i];
+    }
+    return suma / (nd.size()+1);
 }
 
 int main() {
