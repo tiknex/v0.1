@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <fstream>
 using namespace std;
 using std::cin;
 using std::cout;
@@ -19,9 +21,7 @@ double vidurkis(int a, int b) {
     double v = (a + b) / 2.0;  
     return v;
 }
-double mediana(int a, int b){
 
-}
 int main() {
     int stud_kiekis;
     cout<<"studentu skaicius"<<endl;
@@ -40,15 +40,16 @@ int main() {
         studentai.push_back(A);
     }
 
-    cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis (vid.)"<<" / "<<"Galutinis (med.)"<<endl;    
+    cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
     cout<<string(70, '-')<<endl;
     for(int i = 0; i < studentai.size(); i++){
-        double rezultatas = vidurkis(studentai[i].nd_rez, studentai[i].egz_rez);
-        //double mediana = 
-        cout << left << setw(15) << studentai[i].pavarde
-             << setw(15) << studentai[i].vardas
-             << setw(15) << rezultatas 
-             << endl;
+        double rezultatas1 = vidurkis(studentai[i].nd_rez, studentai[i].egz_rez);
+        double rezultatas2 = vidurkis(studentai[i].nd_rez, studentai[i].egz_rez);
+        cout <<left<<setw(15)<<studentai[i].pavarde
+             <<setw(15)<<studentai[i].vardas
+             <<setw(15)<<rezultatas1
+             <<rezultatas2
+             <<endl;
     }
          
 }
