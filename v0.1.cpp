@@ -52,13 +52,20 @@ double mediana(vector<int> nd, vector<int> egz) {
 
 int main() {
     srand(time(0));
-    string atsakymas;
-    int stud_kiekis;
-    cout<<"studentu skaicius"<<endl;
-    cin>>stud_kiekis;
     vector<Studentas> studentai;
-    for(int i = 0; i < stud_kiekis; i++){
+    int pasirinkimas;
+
+    while(true){
+    cout<<endl;
+    cout<<"1 - Pridet studenta"<<endl;
+    cout<<"2 - Rodyti studentu lentele"<<endl;
+    cout<<"3 - Baigti programa"<<endl;
+    cout<<"Pasirinkite veiksma: ";
+    cin>>pasirinkimas;
+
+    if(pasirinkimas == 1){
         Studentas A;
+        string atsakymas;
         cout<<"iveskite studento varda"<<endl;
         cin>>A.vardas;
         cout<<"iveskite studento pavarde"<<endl;
@@ -67,7 +74,6 @@ int main() {
         cin>>atsakymas;
     if (atsakymas == "taip") {
         int kiekis_nd;
-        int kiekis_egz;
         cout << "kiek nd pazymiu norite sugeneruoti?" << endl;
         cin >> kiekis_nd;
 
@@ -75,7 +81,7 @@ int main() {
         int atsitiktinis_skaicius_nd = rand() % 10 + 1;
         A.nd_rezultatai.push_back(atsitiktinis_skaicius_nd);
     }
-        int atsitiktinis_skaicius_egz = rand() % 10;
+        int atsitiktinis_skaicius_egz = rand() % 10 + 1;
         A.egz_rezultatai.push_back(atsitiktinis_skaicius_egz);   
     } else {
     cout << "iveskite studento nd pazymius, kai baigsite iveskite -1" << endl;
@@ -87,12 +93,18 @@ int main() {
         }
         A.nd_rezultatai.push_back(reiksme);
     }
+    cout<<"iveskite studento egzamino pazymi"<<endl;
+    int egz_reiksme;
+    cin>>egz_reiksme;
+    A.egz_rezultatai.push_back(egz_reiksme);
     }
     studentai.push_back(A);
-}
+    cout<<"studentas pridetas"<<endl;
 
+    } else if(pasirinkimas == 2){
     cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
     cout<<string(70, '-')<<endl;
+    cout<<fixed<<setprecision(2);
     for(int i = 0; i < studentai.size(); i++){
         double rezultatas1 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
         double rezultatas2 = mediana(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
@@ -102,5 +114,12 @@ int main() {
              <<rezultatas2
              <<endl;
     }
-         
+
+    } else if(pasirinkimas == 3){
+        break;
+    } else {
+        cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;
+    }
+    }
+
 }
