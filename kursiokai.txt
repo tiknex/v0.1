@@ -1,0 +1,5 @@
+Pavardė    Vardas     ND1  ND2  ND3  ND4  ND5  Egzaminas
+Jonaitis   Jonas      4    5    6    7    8    9
+Jurgaitis  Jurgis     9    8    7    6    5    4
+Ausriene   Ausra      5    6    9    4    3    2
+Mildaite   Milda      8    8    4    1    7    9

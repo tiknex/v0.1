@@ -55,7 +55,7 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
     studentai.clear();
     ifstream failas(failo_pavadinimas);
     if(!failas){
-        cout<<"Nepavyko atidaryti failo!"<<endl;
+        cout<<"Nepavyko atidaryti failo"<<endl;
         return;
     }
 
@@ -66,27 +66,51 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
 
     while(getline(failas, eilute)){
         stringstream ss(eilute);
-        vector<string> tokenai;
+        vector<string> zodziai;
         string t;
         while(ss >> t){
-            tokenai.push_back(t);
+            zodziai.push_back(t);
         }
 
-        if(tokenai.size() < 3) continue;
+        if(zodziai.size() < 3) continue;
 
         Studentas A;
-        A.vardas = tokenai[0];
-        A.pavarde = tokenai[1];
+        A.vardas = zodziai[0];
+        A.pavarde = zodziai[1];
 
-        for(int i = 2; i < (int)tokenai.size() - 1; i++){
-            A.nd_rezultatai.push_back(stoi(tokenai[i]));
+        for(int i = 2; i < (int)zodziai.size() - 1; i++){
+            A.nd_rezultatai.push_back(stoi(zodziai[i]));
         }
-        A.egz_rezultatai.push_back(stoi(tokenai[tokenai.size() - 1]));
+        A.egz_rezultatai.push_back(stoi(zodziai[zodziai.size() - 1]));
 
         studentai.push_back(A);
     }
 
     failas.close();
+}
+void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
+    ofstream failas(isvesties_failas);
+    if(!failas){
+        cout<<"Nepavyko sukurti failo"<<endl;
+        return;
+    }
+
+    failas<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;
+    failas<<string(70, '-')<<endl;
+    failas<<fixed<<setprecision(2);
+
+    for(int i = 0; i < (int)studentai.size(); i++){
+        double rezultatas1 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
+        double rezultatas2 = mediana(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
+        failas <<left<<setw(15)<<studentai[i].pavarde
+               <<setw(15)<<studentai[i].vardas
+               <<setw(15)<<rezultatas1
+               <<rezultatas2
+               <<endl;
+    }
+
+    failas.close();
+    cout<<"Rezultatai issaugoti i faila: "<<isvesties_failas<<endl;
 }
 
 int main() {
@@ -149,6 +173,14 @@ int main() {
     cout<<"studentas pridetas"<<endl;
 
     } else if(pasirinkimas == 2){
+        sort(studentai.begin(), studentai.end(), [](Studentas a, Studenta b){
+            return a.pavarde < b.pavarde;
+        });
+    if((int)studentai.size() > 100){
+        cout<<"Per daug duomenu rodyti ekrane ("<<studentai.size()<<" studentu)."<<endl;
+        cout<<"Rezultatai bus issaugoti i faila."<<endl;
+        rasyti_i_faila(studentai, "rezultatai.txt");
+    } else {
     cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
     cout<<string(70, '-')<<endl;
     cout<<fixed<<setprecision(2);
@@ -160,6 +192,7 @@ int main() {
              <<setw(15)<<rezultatas1
              <<rezultatas2
              <<endl;
+    }
     }
 
     } else if(pasirinkimas == 3){
