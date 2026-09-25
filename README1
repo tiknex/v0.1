@@ -1,0 +1,5 @@
+# Studentu vidurkio/medianos skaiciavimo programa
+
+Programa ivedu, generuoja atsitiktinai arba nuskaito is failo studentu
+duomenis (vardas, pavarde, ND ir egzamino pazymiai) ir skaiciuoja
+galutini bala (vidurki ir mediana). Duomenys saugomi `vector<Studentas>`.
