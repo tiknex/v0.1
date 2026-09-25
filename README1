@@ -3,3 +3,10 @@
 Programa ivedu, generuoja atsitiktinai arba nuskaito is failo studentu
 duomenis (vardas, pavarde, ND ir egzamino pazymiai) ir skaiciuoja
 galutini bala (vidurki ir mediana). Duomenys saugomi `vector<Studentas>`.
+## Efektyvumo tyrimai
+Testuota su 10 000, 100 000 ir 1 000 000 studentu failais. Naudojamas
+`reserve()` pries skaitymo cikla, kad isvengti pasikartojancio atminties
+persialokavimo. Su >100 studentu rezultatai automatiskai rasomi i
+`rezultatai.txt`, nes spausdinimas i ekrana su dideliais duomenimis
+yra lenas. Funkcijos priima `vector` per nuoroda (`&`), isvengiant
+duomenu kopijavimo.
