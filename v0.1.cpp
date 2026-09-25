@@ -89,6 +89,9 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
     failas.close();
 }
 void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
+    sort(studentai.begin(), studentai.end(), [](Studentas a, Studenta b){
+            return a.pavarde < b.pavarde;
+        });
     ofstream failas(isvesties_failas);
     if(!failas){
         cout<<"Nepavyko sukurti failo"<<endl;
