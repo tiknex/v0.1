@@ -21,7 +21,7 @@ struct Studentas{
     vector<int> nd_rezultatai;
     vector<int> egz_rezultatai;
 };
-double vidurkis(vector<int>& nd, vector<int>& egz) {
+double vidurkis(vector<int>& nd, vector<int>& egz) {  //& nedaro kopijos
     double suma = 0; 
     for(int i=0; i < (int)nd.size(); i++){
         suma += nd[i];
@@ -89,7 +89,7 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
     failas.close();
 }
 void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
-    sort(studentai.begin(), studentai.end(), [](Studentas a, Studenta b){
+    sort(studentai.begin(), studentai.end(), [](Studentas a, Studentas b){
             return a.pavarde < b.pavarde;
         });
     ofstream failas(isvesties_failas);
@@ -130,7 +130,7 @@ int main() {
     cout<<"Pasirinkite veiksma: ";
     cin>>pasirinkimas;
 
-    if(cin.fail()){
+    if(cin.fail()){                         //apsaugo nuo netinkamos ivesties
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout<<"Netinkama ivestis, iveskite skaiciu."<<endl;
@@ -176,7 +176,7 @@ int main() {
     cout<<"studentas pridetas"<<endl;
 
     } else if(pasirinkimas == 2){
-        sort(studentai.begin(), studentai.end(), [](Studentas a, Studenta b){
+        sort(studentai.begin(), studentai.end(), [](Studentas a, Studentas b){
             return a.pavarde < b.pavarde;
         });
     if((int)studentai.size() > 100){
