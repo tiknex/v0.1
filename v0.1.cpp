@@ -116,8 +116,22 @@ void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
     cout<<"Rezultatai issaugoti i faila: "<<isvesties_failas<<endl;
 }
 
+//kintamaji sukurti su kiekiu studentu studentu_kiekis
+void generuoti_faila(int failu_kiekis, string failo_pavadinimas){
+    ofstream failas(failo_pavadinimas);
+    if(!failas){
+        cout<<"Nepavyko sukurti failo"<<endl;
+        return;
+    }
+    failas<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis balas"<<endl;
+    failas<<string(70, '-')<<endl;
+    for(int i = 1; i<studentu_kiekis; i++){
+        failas <<left<<setw(15)<<"Vardas" + to_string(i)<<setw(15)<<"Pavarde" + to_string(i)<<rand() % 10 + 1<<endl;
 
+        
+    }
 
+}
 
 
 
