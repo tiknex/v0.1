@@ -117,7 +117,7 @@ void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
 }
 
 //kintamaji sukurti su kiekiu studentu studentu_kiekis
-void generuoti_faila(int failu_kiekis, string failo_pavadinimas){
+void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
     ofstream failas(failo_pavadinimas);
     if(!failas){
         cout<<"Nepavyko sukurti failo"<<endl;
@@ -125,12 +125,10 @@ void generuoti_faila(int failu_kiekis, string failo_pavadinimas){
     }
     failas<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis balas"<<endl;
     failas<<string(70, '-')<<endl;
-    for(int i = 1; i<studentu_kiekis; i++){
+    for(int i = 1; i<=studentu_kiekis; i++){
         failas <<left<<setw(15)<<"Vardas" + to_string(i)<<setw(15)<<"Pavarde" + to_string(i)<<rand() % 10 + 1<<endl;
-
-        
     }
-
+    failas.close();
 }
 
 
@@ -146,7 +144,8 @@ int main() {
     cout<<"1 - Pridet studenta"<<endl;
     cout<<"2 - Rodyti studentu lentele"<<endl;
     cout<<"3 - Baigti programa"<<endl;
-    cout<<"4 - Nuskaityti duomenis is failo"<<endl;
+    cout<<"4 - Sugeneruoti faila"<<endl;
+    cout<<"5 - Nuskaityti duomenis is failo"<<endl;
     cout<<"Pasirinkite veiksma: ";
     cin>>pasirinkimas;
 
@@ -221,6 +220,22 @@ int main() {
     } else if(pasirinkimas == 3){
         break;
     } else if(pasirinkimas == 4){
+        int failu_kiekis;
+        cout<<"kiek failu norite sukurti?"<<endl;    //.............................................padaryt, cin ignore
+        cin>>failu_kiekis;
+        for(int i = 0; i<failu_kiekis; i++){
+            int studentu_kiekis;
+            string failo_pavadinimas;
+            cout<<"kiek studentu norite, kad butu "<<i+1<<" faile"<<endl;
+            cin>>studentu_kiekis;
+            cout<<"iveskite failo pavadinima (su .txt)"<<endl;
+            cin>>failo_pavadinimas;
+            generuoti_faila(studentu_kiekis, failo_pavadinimas);
+            cout<<"failas "<<failo_pavadinimas<<" sukurtas"<<endl;
+        }
+    }
+    
+    else if(pasirinkimas == 5){
         string failo_pavadinimas;
         cout<<"iveskite failo pavadinima (pvz. kursiokai.txt): "<<endl;
         cin>>failo_pavadinimas;
@@ -228,7 +243,7 @@ int main() {
         cout<<"Duomenys nuskaityti is failo, ivesta studentu: "<<studentai.size()<<endl;
     } else {
         cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;
-    }
+    } 
     }
 
 }
