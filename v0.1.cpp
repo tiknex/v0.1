@@ -72,7 +72,7 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
             zodziai.push_back(t);
         }
 
-        if(zodziai.size() < 3) continue;
+        if(zodziai.size() < 3) continue;   
 
         Studentas A;
         A.vardas = zodziai[0];
@@ -115,6 +115,12 @@ void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
     failas.close();
     cout<<"Rezultatai issaugoti i faila: "<<isvesties_failas<<endl;
 }
+
+
+
+
+
+
 
 int main() {
     srand(time(0));
