@@ -88,16 +88,12 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
 
     failas.close();
 }
-void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
-    sort(studentai.begin(), studentai.end(), [](Studentas a, Studentas b){
-            return a.pavarde < b.pavarde;
-        });
+void rasyti_i_faila_pagal_pavarde(vector<Studentas>& studentai, string isvesties_failas){
     ofstream failas(isvesties_failas);
     if(!failas){
         cout<<"Nepavyko sukurti failo"<<endl;
         return;
     }
-
     failas<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;
     failas<<string(70, '-')<<endl;
     failas<<fixed<<setprecision(2);
@@ -116,7 +112,7 @@ void rasyti_i_faila(vector<Studentas>& studentai, string isvesties_failas){
     cout<<"Rezultatai issaugoti i faila: "<<isvesties_failas<<endl;
 }
 
-//kintamaji sukurti su kiekiu studentu studentu_kiekis
+
 void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
     ofstream failas(failo_pavadinimas);
     if(!failas){
@@ -131,6 +127,27 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
     failas.close();
 }
 
+void padalinti(vector<Studentas>& studentai, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakiai){
+    vargsiukai.clear();
+    kietiakiai.clear();
+    for(int i = 0; i < (int)studentai.size(); i++){
+        double galutinis = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
+        if(galutinis < 5.0){
+            vargsiukai.push_back(studentai[i]);
+        } else {
+            kietiakiai.push_back(studentai[i]);
+        }
+    }
+}
+
+void rasyti_i_faila_pagal_pazymi(string isvesties_failas, ){
+    ofstream failas(isvesties_failas);
+    if(!failas){
+        cout<<"Nepavyko sukurti failo"<<endl;
+        return;
+    }
+
+}
 
 
 
@@ -201,7 +218,7 @@ int main() {
     if((int)studentai.size() > 100){
         cout<<"Per daug duomenu rodyti ekrane ("<<studentai.size()<<" studentu)."<<endl;
         cout<<"Rezultatai bus issaugoti i faila."<<endl;
-        rasyti_i_faila(studentai, "rezultatai.txt");
+        rasyti_i_faila_pagal_pavarde(studentai, "rezultatai.txt");
     } else {
     cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
     cout<<string(70, '-')<<endl;
@@ -221,7 +238,7 @@ int main() {
         break;
     } else if(pasirinkimas == 4){
         int failu_kiekis;
-        cout<<"kiek failu norite sukurti?"<<endl;    //.............................................padaryt, cin ignore
+        cout<<"kiek failu norite sukurti?"<<endl;  
         cin>>failu_kiekis;
         for(int i = 0; i<failu_kiekis; i++){
             int studentu_kiekis;
@@ -233,6 +250,7 @@ int main() {
             generuoti_faila(studentu_kiekis, failo_pavadinimas);
             cout<<"failas "<<failo_pavadinimas<<" sukurtas"<<endl;
         }
+
     }
     
     else if(pasirinkimas == 5){
