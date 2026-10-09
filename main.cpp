@@ -6,6 +6,7 @@
 #include <limits>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 #include "studentas.h"
 #include "funkcijos.h"
 using namespace std;
@@ -107,8 +108,11 @@ int main() {
             cin>>studentu_kiekis;
             cout<<"iveskite failo pavadinima (su .txt)"<<endl;
             cin>>failo_pavadinimas;
+            auto pradzia = chrono::high_resolution_clock::now();
             generuoti_faila(studentu_kiekis, failo_pavadinimas);
-            cout<<"failas "<<failo_pavadinimas<<" sukurtas"<<endl;
+            auto pabaiga = chrono::high_resolution_clock::now();
+            chrono::duration<double> laikas = pabaiga - pradzia;
+            cout<<"failas "<<failo_pavadinimas<<" sukurtas per "<<laikas.count()<<" s"<<endl;
         }
 
     }
@@ -124,22 +128,48 @@ int main() {
     cout<<"iveskite sugeneruoto failo pavadinima (pvz. studentai1000.txt): "<<endl;
     cin>>failo_pavadinimas;
 
+    int budas;
+    cout<<"kaip rusiuoti rezultatus? 1 - pagal pazymi (didejancia tvarka), 2 - pagal varda"<<endl;
+    cin>>budas;
+
     vector<Studentas> vargsiukai;
     vector<Studentas> kietiakiai;
 
+    //nuskaito
+    auto t1 = chrono::high_resolution_clock::now();
     nuskaityti_is_failo(studentai, failo_pavadinimas);
+    auto t2 = chrono::high_resolution_clock::now();
     if(studentai.empty()){
         cout<<"Faile nera studentu."<<endl;
         continue;
     }
 
+    //padalina
     padalinti(studentai, vargsiukai, kietiakiai);
+    auto t3 = chrono::high_resolution_clock::now();
+
+    //rusiuoja
+    rusiuoti(vargsiukai, budas);
+    rusiuoti(kietiakiai, budas);
+    auto t4 = chrono::high_resolution_clock::now();
+
+    //isveda i du failus
     rasyti_i_faila_pagal_pazymi(vargsiukai, "vargsiukai.txt");
     rasyti_i_faila_pagal_pazymi(kietiakiai, "kietiakiai.txt");
+    auto t5 = chrono::high_resolution_clock::now();
+
+    chrono::duration<double> nuskaitymas = t2 - t1;
+    chrono::duration<double> padalinimas = t3 - t2;
+    chrono::duration<double> rusiavimas = t4 - t3;
+    chrono::duration<double> isvedimas = t5 - t4;
 
     cout<<"Studentu: "<<studentai.size()
         <<" (vargsiukai: "<<vargsiukai.size()
         <<", kietiakiai: "<<kietiakiai.size()<<")"<<endl;
+    cout<<"Nuskaitymas is failo:     "<<nuskaitymas.count()<<" s"<<endl;
+    cout<<"Padalinimas i 2 grupes:   "<<padalinimas.count()<<" s"<<endl;
+    cout<<"Rusiavimas:               "<<rusiavimas.count()<<" s"<<endl;
+    cout<<"Isvedimas i 2 failus:     "<<isvedimas.count()<<" s"<<endl;
     cout<<"Rezultatai: vargsiukai.txt ir kietiakiai.txt"<<endl;
     } else {
         cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;

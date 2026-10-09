@@ -148,3 +148,16 @@ void rasyti_i_faila_pagal_pazymi(vector<Studentas>& studentai, string isvesties_
     }
     failas.close();
 }
+
+
+void rusiuoti(vector<Studentas>& studentai, int budas){
+    if(budas == 1){
+        sort(studentai.begin(), studentai.end(), [](Studentas& a, Studentas& b){
+            return vidurkis(a.nd_rezultatai, a.egz_rezultatai) < vidurkis(b.nd_rezultatai, b.egz_rezultatai);
+        });
+    } else {
+        sort(studentai.begin(), studentai.end(), [](Studentas& a, Studentas& b){
+            return a.vardas < b.vardas;
+        });
+    }
+}
