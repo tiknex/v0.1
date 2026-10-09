@@ -9,11 +9,6 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-using std::cin;
-using std::cout;
-using std::left;
-using std::right;
-using std::setw;
 
 struct Studentas{
     string vardas;
@@ -119,7 +114,7 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
         cout<<"Nepavyko sukurti failo"<<endl;
         return;
     }
-    failas<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis balas"<<endl;
+    failas<<left<<setw(15)<<"Vardas"<<setw(15)<<"Pavarde"<<"Galutinis"<<"\n";
     failas<<string(70, '-')<<endl;
     for(int i = 1; i<=studentu_kiekis; i++){
         failas <<left<<setw(15)<<"Vardas" + to_string(i)<<setw(15)<<"Pavarde" + to_string(i)<<rand() % 10 + 1<<endl;
@@ -140,13 +135,23 @@ void padalinti(vector<Studentas>& studentai, vector<Studentas>& vargsiukai, vect
     }
 }
 
-void rasyti_i_faila_pagal_pazymi(string isvesties_failas, ){
+void rasyti_i_faila_pagal_pazymi(vector<Studentas>& studentai, string isvesties_failas){
     ofstream failas(isvesties_failas);
     if(!failas){
         cout<<"Nepavyko sukurti failo"<<endl;
         return;
     }
+    failas<<left<<setw(15)<<"Vardas"<<setw(15)<<"Pavarde"<<"Galutinis"<<"\n";
+    failas<<string(40, '-')<<"\n";
+    failas<<fixed<<setprecision(2);
 
+    for(int i = 0; i < (int)studentai.size(); i++){
+        double galutinis = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
+        failas<<left<<setw(15)<<studentai[i].vardas
+              <<setw(15)<<studentai[i].pavarde
+              <<galutinis<<"\n";
+    }
+    failas.close();
 }
 
 
@@ -163,6 +168,7 @@ int main() {
     cout<<"3 - Baigti programa"<<endl;
     cout<<"4 - Sugeneruoti faila"<<endl;
     cout<<"5 - Nuskaityti duomenis is failo"<<endl;
+    cout<<"6 - Padalinti faila i vargsiukus ir kietiakius"<<endl;
     cout<<"Pasirinkite veiksma: ";
     cin>>pasirinkimas;
 
@@ -259,9 +265,32 @@ int main() {
         cin>>failo_pavadinimas;
         nuskaityti_is_failo(studentai, failo_pavadinimas);
         cout<<"Duomenys nuskaityti is failo, ivesta studentu: "<<studentai.size()<<endl;
+    } else if(pasirinkimas == 6){
+    string failo_pavadinimas;
+    cout<<"iveskite sugeneruoto failo pavadinima (pvz. studentai1000.txt): "<<endl;
+    cin>>failo_pavadinimas;
+
+    vector<Studentas> vargsiukai;
+    vector<Studentas> kietiakiai;
+
+    nuskaityti_is_failo(studentai, failo_pavadinimas);
+    if(studentai.empty()){
+        cout<<"Faile nera studentu."<<endl;
+        continue;
+    }
+
+    padalinti(studentai, vargsiukai, kietiakiai);
+    rasyti_i_faila_pagal_pazymi(vargsiukai, "vargsiukai.txt");
+    rasyti_i_faila_pagal_pazymi(kietiakiai, "kietiakiai.txt");
+
+    cout<<"Studentu: "<<studentai.size()
+        <<" (vargsiukai: "<<vargsiukai.size()
+        <<", kietiakiai: "<<kietiakiai.size()<<")"<<endl;
+    cout<<"Rezultatai: vargsiukai.txt ir kietiakiai.txt"<<endl;
     } else {
         cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;
-    } 
+    }
+    
     }
 
 }
