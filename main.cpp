@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <limits>
 #include <cstdlib>
@@ -11,12 +12,13 @@
 #include "funkcijos.h"
 using namespace std;
 
-int main() {
-    srand(time(0));
-    vector<Studentas> studentai;
+template <typename Konteineris>
+void programa(string konteinerio_pavadinimas){
+    Konteineris studentai;
     int pasirinkimas;
 
     while(true){
+    cout<<"Naudojamas konteineris: "<<konteinerio_pavadinimas<<endl;
     cout<<endl;
     cout<<"1 - Pridet studenta"<<endl;
     cout<<"2 - Rodyti studentu lentele"<<endl;
@@ -74,7 +76,7 @@ int main() {
     cout<<"studentas pridetas"<<endl;
 
     } else if(pasirinkimas == 2){
-        sort(studentai.begin(), studentai.end(), [](Studentas a, Studentas b){
+                rusiuoti(studentai, 3);   // 3 - pagal pavarde{
             return a.pavarde < b.pavarde;
         });
     if((int)studentai.size() > 100){
@@ -85,14 +87,16 @@ int main() {
     cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
     cout<<string(70, '-')<<endl;
     cout<<fixed<<setprecision(2);
-    for(int i = 0; i < (int)studentai.size(); i++){
-        double rezultatas1 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        double rezultatas2 = mediana(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        cout <<left<<setw(15)<<studentai[i].pavarde
-             <<setw(15)<<studentai[i].vardas
+        for(auto& s : studentai){
+        double rezultatas1 = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
+        double rezultatas2 = mediana(s.nd_rezultatai, s.egz_rezultatai);
+        cout <<left<<setw(15)<<s.pavarde
+             <<setw(15)<<s.vardas
              <<setw(15)<<rezultatas1
              <<rezultatas2
              <<endl;
+    }
+    cout<<defaultfloat<<setprecision(6);
     }
     }
 

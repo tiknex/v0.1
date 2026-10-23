@@ -148,22 +148,33 @@ void rasyti_i_faila_pagal_pazymi(Konteineris& studentai, string isvesties_failas
     failas<<string(40, '-')<<"\n";
     failas<<fixed<<setprecision(2);
 
-    for(int i = 0; i < (int)studentai.size(); i++){
-        double galutinis = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        failas<<left<<setw(15)<<studentai[i].vardas<<setw(15)<<studentai[i].pavarde<<galutinis<<"\n";
+        for(auto& s : studentai){
+        double galutinis = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
+        failas<<left<<setw(20)<<s.vardas<<setw(20)<<s.pavarde<<galutinis<<"\n";
     }
     failas.close();
 }
 
 
+bool pagal_pazymi(Studentas& a, Studentas& b){
+    return vidurkis(a.nd_rezultatai, a.egz_rezultatai) < vidurkis(b.nd_rezultatai, b.egz_rezultatai);
+}
+bool pagal_varda(Studentas& a, Studentas& b){
+    return a.vardas < b.vardas;
+}
+bool pagal_pavarde(Studentas& a, Studentas& b){
+    return a.pavarde < b.pavarde;
+}
+
+// budas: 1 - pagal pazymi, 2 - pagal varda, 3 - pagal pavarde
 void rusiuoti(vector<Studentas>& studentai, int budas){
-    if(budas == 1){
-        sort(studentai.begin(), studentai.end(), [](Studentas& a, Studentas& b){
-            return vidurkis(a.nd_rezultatai, a.egz_rezultatai) < vidurkis(b.nd_rezultatai, b.egz_rezultatai);
-        });
-    } else {
-        sort(studentai.begin(), studentai.end(), [](Studentas& a, Studentas& b){
-            return a.vardas < b.vardas;
-        });
-    }
+    if(budas == 1)      sort(studentai.begin(), studentai.end(), pagal_pazymi);
+    else if(budas == 2) sort(studentai.begin(), studentai.end(), pagal_varda);
+    else                sort(studentai.begin(), studentai.end(), pagal_pavarde);
+}
+
+void rusiuoti(list<Studentas>& studentai, int budas){
+    if(budas == 1)      studentai.sort(pagal_pazymi);
+    else if(budas == 2) studentai.sort(pagal_varda);
+    else                studentai.sort(pagal_pavarde);
 }
