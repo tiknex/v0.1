@@ -109,10 +109,19 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
         cout<<"Nepavyko sukurti failo"<<endl;
         return;
     }
-    failas<<left<<setw(15)<<"Vardas"<<setw(15)<<"Pavarde"<<"Galutinis"<<"\n";
+    failas<<left<<setw(15)<<"Vardas"<<setw(15)<<"Pavarde";
+    for(int j = 1; j <= 15; j++){
+        failas<<setw(6)<<"ND" + to_string(j);
+    }
+    failas<<"Egz."<<"\n";
+    
     failas<<string(70, '-')<<endl;
     for(int i = 1; i<=studentu_kiekis; i++){
-        failas <<left<<setw(15)<<"Vardas" + to_string(i)<<setw(15)<<"Pavarde" + to_string(i)<<rand() % 10 + 1<<endl;
+        failas <<left<<setw(15)<<"Vardas" + to_string(i)<<setw(15)<<"Pavarde" + to_string(i);
+        for(int j = 0; j < 15; j++){
+            failas<<setw(6)<<rand() % 10 + 1;
+        }
+        failas<<rand() % 10 + 1<<endl;
     }
     failas.close();
 }
@@ -142,9 +151,7 @@ void rasyti_i_faila_pagal_pazymi(vector<Studentas>& studentai, string isvesties_
 
     for(int i = 0; i < (int)studentai.size(); i++){
         double galutinis = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        failas<<left<<setw(15)<<studentai[i].vardas
-              <<setw(15)<<studentai[i].pavarde
-              <<galutinis<<"\n";
+        failas<<left<<setw(15)<<studentai[i].vardas<<setw(15)<<studentai[i].pavarde<<galutinis<<"\n";
     }
     failas.close();
 }

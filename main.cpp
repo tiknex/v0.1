@@ -24,10 +24,11 @@ int main() {
     cout<<"4 - Sugeneruoti faila"<<endl;
     cout<<"5 - Nuskaityti duomenis is failo"<<endl;
     cout<<"6 - Padalinti faila i vargsiukus ir kietiakius"<<endl;
+    cout<<"7 - Nuskaityti is failo ir isvesti galutini pazymi"<<endl;
     cout<<"Pasirinkite veiksma: ";
     cin>>pasirinkimas;
 
-    if(cin.fail()){                         //apsaugo nuo netinkamos ivesties
+    if(cin.fail()){                         //apsaugo nuo netinkamos iv
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout<<"Netinkama ivestis, iveskite skaiciu."<<endl;
@@ -135,25 +136,22 @@ int main() {
     vector<Studentas> vargsiukai;
     vector<Studentas> kietiakiai;
 
-    //nuskaito
     auto t1 = chrono::high_resolution_clock::now();
     nuskaityti_is_failo(studentai, failo_pavadinimas);
     auto t2 = chrono::high_resolution_clock::now();
     if(studentai.empty()){
-        cout<<"Faile nera studentu."<<endl;
+        cout<<"Faile nera studentu."<<endl; 
         continue;
     }
 
-    //padalina
+    
     padalinti(studentai, vargsiukai, kietiakiai);
     auto t3 = chrono::high_resolution_clock::now();
-
-    //rusiuoja
+    
     rusiuoti(vargsiukai, budas);
     rusiuoti(kietiakiai, budas);
     auto t4 = chrono::high_resolution_clock::now();
 
-    //isveda i du failus
     rasyti_i_faila_pagal_pazymi(vargsiukai, "vargsiukai.txt");
     rasyti_i_faila_pagal_pazymi(kietiakiai, "kietiakiai.txt");
     auto t5 = chrono::high_resolution_clock::now();
@@ -171,6 +169,13 @@ int main() {
     cout<<"Rusiavimas:               "<<rusiavimas.count()<<" s"<<endl;
     cout<<"Isvedimas i 2 failus:     "<<isvedimas.count()<<" s"<<endl;
     cout<<"Rezultatai: vargsiukai.txt ir kietiakiai.txt"<<endl;
+    } else if (pasirinkimas == 7){
+        cout<<"Koks failo pavadinimas?"<<endl;
+        string failo_pavadinimas;
+        cin>>failo_pavadinimas;
+    nuskaityti_is_failo(studentai, failo_pavadinimas);
+    rasyti_i_faila_pagal_pazymi(studentai, "galutinis.txt");
+    
     } else {
         cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;
     }
