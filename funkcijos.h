@@ -1,9 +1,9 @@
 #pragma once
-
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -41,7 +41,8 @@ double mediana(vector<int>& nd, vector<int>& egz) {
         return (visos_reiksmes[n/2 - 1] + visos_reiksmes[n/2]) / 2.0;
     }
 }
-void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas){
+template <typename Konteineris>
+void nuskaityti_is_failo(Konteineris& studentai, string failo_pavadinimas){
     studentai.clear();
     ifstream failas(failo_pavadinimas);
     if(!failas){
@@ -78,7 +79,8 @@ void nuskaityti_is_failo(vector<Studentas>& studentai, string failo_pavadinimas)
 
     failas.close();
 }
-void rasyti_i_faila_pagal_pavarde(vector<Studentas>& studentai, string isvesties_failas){
+template <typename Konteineris>
+void rasyti_i_faila_pagal_pavarde(Konteineris& studentai, string isvesties_failas){
     ofstream failas(isvesties_failas);
     if(!failas){
         cout<<"Nepavyko sukurti failo"<<endl;
@@ -102,7 +104,6 @@ void rasyti_i_faila_pagal_pavarde(vector<Studentas>& studentai, string isvesties
     cout<<"Rezultatai issaugoti i faila: "<<isvesties_failas<<endl;
 }
 
-
 void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
     ofstream failas(failo_pavadinimas);
     if(!failas){
@@ -123,10 +124,10 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
         }
         failas<<rand() % 10 + 1<<endl;
     }
-    failas.close();
+    failas.close();s
 }
-
-void padalinti(vector<Studentas>& studentai, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakiai){
+template <typename Konteineris>
+void padalinti(Konteineris& studentai, Konteineris& vargsiukai, Konteineriss& kietiakiai){
     vargsiukai.clear();
     kietiakiai.clear();
     for(int i = 0; i < (int)studentai.size(); i++){
@@ -138,8 +139,8 @@ void padalinti(vector<Studentas>& studentai, vector<Studentas>& vargsiukai, vect
         }
     }
 }
-
-void rasyti_i_faila_pagal_pazymi(vector<Studentas>& studentai, string isvesties_failas){
+template <typename Konteineris>
+void rasyti_i_faila_pagal_pazymi(Konteineris& studentai, string isvesties_failas){
     ofstream failas(isvesties_failas);
     if(!failas){
         cout<<"Nepavyko sukurti failo"<<endl;
