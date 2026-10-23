@@ -27,6 +27,7 @@ void programa(string konteinerio_pavadinimas){
     cout<<"5 - Nuskaityti duomenis is failo"<<endl;
     cout<<"6 - Padalinti faila i vargsiukus ir kietiakius"<<endl;
     cout<<"7 - Nuskaityti is failo ir isvesti galutini pazymi"<<endl;
+        cout<<"8 - Testuoti kelis kartus ir apskaiciuoti laiku vidurki"<<endl;
     cout<<"Pasirinkite veiksma: ";
     cin>>pasirinkimas;
 
@@ -74,6 +75,7 @@ void programa(string konteinerio_pavadinimas){
     }
     studentai.push_back(A);
     cout<<"studentas pridetas"<<endl;
+        cout<<"Studento objekto adresas atmintyje: "<<&studentai.back()<<endl;
 
     } else if(pasirinkimas == 2){
                 rusiuoti(studentai, 3);   // 3 - pagal pavarde{
@@ -84,7 +86,7 @@ void programa(string konteinerio_pavadinimas){
         cout<<"Rezultatai bus issaugoti i faila."<<endl;
         rasyti_i_faila_pagal_pavarde(studentai, "rezultatai.txt");
     } else {
-    cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<"Galutinis(med.)"<<endl;    
+    cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<setw(18)<<"Galutinis(med.)"<<"Adresas"<<endl;    
     cout<<string(70, '-')<<endl;
     cout<<fixed<<setprecision(2);
         for(auto& s : studentai){
@@ -93,7 +95,8 @@ void programa(string konteinerio_pavadinimas){
         cout <<left<<setw(15)<<s.pavarde
              <<setw(15)<<s.vardas
              <<setw(15)<<rezultatas1
-             <<rezultatas2
+                          <<setw(18)<<rezultatas2
+             <<&s
              <<endl;
     }
     cout<<defaultfloat<<setprecision(6);
@@ -179,11 +182,75 @@ void programa(string konteinerio_pavadinimas){
         cin>>failo_pavadinimas;
     nuskaityti_is_failo(studentai, failo_pavadinimas);
     rasyti_i_faila_pagal_pazymi(studentai, "galutinis.txt");
-    
+        } else if (pasirinkimas == 8){
+        string failo_pavadinimas;
+        cout<<"iveskite sugeneruoto failo pavadinima (pvz. studentai1000.txt): "<<endl;
+        cin>>failo_pavadinimas;
+        int kartai;
+        cout<<"kiek kartu kartoti testa?"<<endl;
+        cin>>kartai;
+        int budas;
+        cout<<"kaip rusiuoti rezultatus? 1 - pagal pazymi (didejancia tvarka), 2 - pagal varda"<<endl;
+        cin>>budas;
+
+        double suma_nuskaitymas = 0;
+        double suma_padalinimas = 0;
+        double suma_rusiavimas = 0;
+        double suma_isvedimas = 0;
+
+        for(int k = 0; k < kartai; k++){
+            Konteineris vargsiukai;
+            Konteineris kietiakiai;
+
+            auto t1 = chrono::high_resolution_clock::now();
+            nuskaityti_is_failo(studentai, failo_pavadinimas);
+            auto t2 = chrono::high_resolution_clock::now();
+            padalinti(studentai, vargsiukai, kietiakiai);
+            auto t3 = chrono::high_resolution_clock::now();
+            rusiuoti(vargsiukai, budas);
+            rusiuoti(kietiakiai, budas);
+            auto t4 = chrono::high_resolution_clock::now();
+            rasyti_i_faila_pagal_pazymi(vargsiukai, "vargsiukai.txt");
+            rasyti_i_faila_pagal_pazymi(kietiakiai, "kietiakiai.txt");
+            auto t5 = chrono::high_resolution_clock::now();
+
+            suma_nuskaitymas += chrono::duration<double>(t2 - t1).count();
+            suma_padalinimas += chrono::duration<double>(t3 - t2).count();
+            suma_rusiavimas  += chrono::duration<double>(t4 - t3).count();
+            suma_isvedimas   += chrono::duration<double>(t5 - t4).count();
+
+            cout<<k + 1<<" testas baigtas"<<endl;
+        }
+
+        if(studentai.empty()){
+            cout<<"Faile nera studentu."<<endl;
+            continue;
+        }
+
+        cout<<"Failas: "<<failo_pavadinimas<<", studentu: "<<studentai.size()
+            <<", konteineris: "<<konteinerio_pavadinimas<<", testu: "<<kartai<<endl;
+        cout<<"Vidutiniai laikai:"<<endl;
+        cout<<"Nuskaitymas is failo:     "<<suma_nuskaitymas / kartai<<" s"<<endl;
+        cout<<"Padalinimas i 2 grupes:   "<<suma_padalinimas / kartai<<" s"<<endl;
+        cout<<"Rusiavimas:               "<<suma_rusiavimas / kartai<<" s"<<endl;
+        cout<<"Isvedimas i 2 failus:     "<<suma_isvedimas / kartai<<" s"<<endl;
     } else {
         cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;
     }
     
     }
 
+}
+int main() {
+    srand(time(0));
+
+    int konteineris;
+    cout<<"Pasirinkite konteineri: 1 - vector, 2 - list"<<endl;
+    cin>>konteineris;
+
+    if(konteineris == 2){
+        programa<list<Studentas>>("list");
+    } else {
+        programa<vector<Studentas>>("vector");
+    }
 }
