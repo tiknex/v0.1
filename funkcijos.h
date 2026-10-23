@@ -50,8 +50,6 @@ void nuskaityti_is_failo(Konteineris& studentai, string failo_pavadinimas){
         return;
     }
 
-    studentai.reserve(studentai.size() + 1000000);
-
     string eilute;
     getline(failas, eilute);
 
@@ -90,11 +88,11 @@ void rasyti_i_faila_pagal_pavarde(Konteineris& studentai, string isvesties_faila
     failas<<string(70, '-')<<endl;
     failas<<fixed<<setprecision(2);
 
-    for(int i = 0; i < (int)studentai.size(); i++){
-        double rezultatas1 = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        double rezultatas2 = mediana(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
-        failas <<left<<setw(15)<<studentai[i].pavarde
-               <<setw(15)<<studentai[i].vardas
+        for(auto& s : studentai){
+        double rezultatas1 = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
+        double rezultatas2 = mediana(s.nd_rezultatai, s.egz_rezultatai);
+        failas <<left<<setw(15)<<s.pavarde
+               <<setw(15)<<s.vardas
                <<setw(15)<<rezultatas1
                <<rezultatas2
                <<endl;
@@ -124,18 +122,18 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
         }
         failas<<rand() % 10 + 1<<endl;
     }
-    failas.close();s
+    failas.close();
 }
 template <typename Konteineris>
-void padalinti(Konteineris& studentai, Konteineris& vargsiukai, Konteineriss& kietiakiai){
+void padalinti(Konteineris& studentai, Konteineris& vargsiukai, Konteineris& kietiakiai){
     vargsiukai.clear();
     kietiakiai.clear();
-    for(int i = 0; i < (int)studentai.size(); i++){
-        double galutinis = vidurkis(studentai[i].nd_rezultatai, studentai[i].egz_rezultatai);
+        for(auto& s : studentai){
+        double galutinis = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
         if(galutinis < 5.0){
-            vargsiukai.push_back(studentai[i]);
+            vargsiukai.push_back(s);
         } else {
-            kietiakiai.push_back(studentai[i]);
+            kietiakiai.push_back(s);
         }
     }
 }
