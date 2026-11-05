@@ -196,7 +196,7 @@ void programa(string konteinerio_pavadinimas){
     nuskaityti_is_failo(studentai, failo_pavadinimas);
     rasyti_i_faila_pagal_pazymi(studentai, "galutinis.txt");
     cout<<"Galutiniai balai issaugoti i faila galutinis.txt"<<endl;
-    } else if (pasirinkimas == 8){
+        } else if (pasirinkimas == 8){
         string failo_pavadinimas;
         cout<<"iveskite sugeneruoto failo pavadinima (pvz. studentai1000.txt): "<<endl;
         cin>>failo_pavadinimas;
@@ -206,11 +206,13 @@ void programa(string konteinerio_pavadinimas){
         int budas;
         cout<<"kaip rusiuoti rezultatus? 1 - pagal pazymi (didejancia tvarka), 2 - pagal varda"<<endl;
         cin>>budas;
+        int strategija = pasirinkti_strategija();
 
         double suma_nuskaitymas = 0;
         double suma_padalinimas = 0;
         double suma_rusiavimas = 0;
         double suma_isvedimas = 0;
+        size_t viso = 0;
 
         for(int k = 0; k < kartai; k++){
             Konteineris vargsiukai;
@@ -219,13 +221,14 @@ void programa(string konteinerio_pavadinimas){
             auto t1 = chrono::high_resolution_clock::now();
             nuskaityti_is_failo(studentai, failo_pavadinimas);
             auto t2 = chrono::high_resolution_clock::now();
-            padalinti(studentai, vargsiukai, kietiakiai);
+            viso = studentai.size();
+            Konteineris& kiet = padalinti(strategija, studentai, vargsiukai, kietiakiai);
             auto t3 = chrono::high_resolution_clock::now();
             rusiuoti(vargsiukai, budas);
-            rusiuoti(kietiakiai, budas);
+            rusiuoti(kiet, budas);
             auto t4 = chrono::high_resolution_clock::now();
             rasyti_i_faila_pagal_pazymi(vargsiukai, "vargsiukai.txt");
-            rasyti_i_faila_pagal_pazymi(kietiakiai, "kietiakiai.txt");
+            rasyti_i_faila_pagal_pazymi(kiet, "kietiakiai.txt");
             auto t5 = chrono::high_resolution_clock::now();
 
             suma_nuskaitymas += chrono::duration<double>(t2 - t1).count();
@@ -236,18 +239,20 @@ void programa(string konteinerio_pavadinimas){
             cout<<k + 1<<" testas baigtas"<<endl;
         }
 
-        if(studentai.empty()){
+        if(viso == 0){
             cout<<"Faile nera studentu."<<endl;
             continue;
         }
 
-        cout<<"Failas: "<<failo_pavadinimas<<", studentu: "<<studentai.size()
-            <<", konteineris: "<<konteinerio_pavadinimas<<", testu: "<<kartai<<endl;
+        cout<<"Failas: "<<failo_pavadinimas<<", studentu: "<<viso
+            <<", konteineris: "<<konteinerio_pavadinimas
+            <<", strategija: "<<strategija<<", testu: "<<kartai<<endl;
         cout<<"Vidutiniai laikai:"<<endl;
         cout<<"Nuskaitymas is failo:     "<<suma_nuskaitymas / kartai<<" s"<<endl;
         cout<<"Padalinimas i 2 grupes:   "<<suma_padalinimas / kartai<<" s"<<endl;
         cout<<"Rusiavimas:               "<<suma_rusiavimas / kartai<<" s"<<endl;
         cout<<"Isvedimas i 2 failus:     "<<suma_isvedimas / kartai<<" s"<<endl;
+
     } else {
         cout<<"neteisingas pasirinkimas, bandykite dar karta."<<endl;
     }
