@@ -182,6 +182,19 @@ void strategija_3(list<Studentas>& studentai, list<Studentas>& vargsiukai){
     vargsiukai.splice(vargsiukai.end(), studentai, riba, studentai.end());
 }
 template <typename Konteineris>
+Konteineris& padalinti(int strategija, Konteineris& studentai, Konteineris& vargsiukai, Konteineris& kietiakiai){
+    if(strategija == 1){
+        strategija_1(studentai, vargsiukai, kietiakiai);
+        return kietiakiai;
+    }
+    if(strategija == 2){
+        strategija_2(studentai, vargsiukai);
+    } else {
+        strategija_3(studentai, vargsiukai);
+    }
+    return studentai;
+}
+template <typename Konteineris>
 void rasyti_i_faila_pagal_pazymi(Konteineris& studentai, string isvesties_failas){
     ofstream failas(isvesties_failas);
     if(!failas){
