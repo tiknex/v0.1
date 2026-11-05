@@ -27,7 +27,7 @@ void programa(string konteinerio_pavadinimas){
     cout<<"5 - Nuskaityti duomenis is failo"<<endl;
     cout<<"6 - Padalinti faila i vargsiukus ir kietiakius"<<endl;
     cout<<"7 - Nuskaityti is failo ir isvesti galutini pazymi"<<endl;
-        cout<<"8 - Testuoti kelis kartus ir apskaiciuoti laiku vidurki"<<endl;
+    cout<<"8 - Testuoti kelis kartus ir apskaiciuoti laiku vidurki"<<endl;
     cout<<"Pasirinkite veiksma: ";
     cin>>pasirinkimas;
 
@@ -75,32 +75,29 @@ void programa(string konteinerio_pavadinimas){
     }
     studentai.push_back(A);
     cout<<"studentas pridetas"<<endl;
-        cout<<"Studento objekto adresas atmintyje: "<<&studentai.back()<<endl;
+    cout<<"Studento objekto adresas atmintyje: "<<&studentai.back()<<endl;
 
     } else if(pasirinkimas == 2){
-                rusiuoti(studentai, 3);   // 3 - pagal pavarde{
-            return a.pavarde < b.pavarde;
-        });
+        rusiuoti(studentai, 3);   // 3 - pagal pavarde
     if((int)studentai.size() > 100){
         cout<<"Per daug duomenu rodyti ekrane ("<<studentai.size()<<" studentu)."<<endl;
         cout<<"Rezultatai bus issaugoti i faila."<<endl;
         rasyti_i_faila_pagal_pavarde(studentai, "rezultatai.txt");
     } else {
     cout<<left<<setw(15)<<"Pavarde"<<setw(15)<<"Vardas"<<setw(15)<<"Galutinis(vid.)"<<"/"<<setw(18)<<"Galutinis(med.)"<<"Adresas"<<endl;    
-    cout<<string(70, '-')<<endl;
+    cout<<string(85, '-')<<endl;
     cout<<fixed<<setprecision(2);
         for(auto& s : studentai){
         double rezultatas1 = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
         double rezultatas2 = mediana(s.nd_rezultatai, s.egz_rezultatai);
         cout <<left<<setw(15)<<s.pavarde
              <<setw(15)<<s.vardas
-             <<setw(15)<<rezultatas1
-                          <<setw(18)<<rezultatas2
+             <<setw(16)<<rezultatas1
+             <<setw(18)<<rezultatas2
              <<&s
              <<endl;
     }
     cout<<defaultfloat<<setprecision(6);
-    }
     }
 
     } else if(pasirinkimas == 3){
@@ -140,8 +137,8 @@ void programa(string konteinerio_pavadinimas){
     cout<<"kaip rusiuoti rezultatus? 1 - pagal pazymi (didejancia tvarka), 2 - pagal varda"<<endl;
     cin>>budas;
 
-    vector<Studentas> vargsiukai;
-    vector<Studentas> kietiakiai;
+    Konteineris vargsiukai;
+    Konteineris kietiakiai;
 
     auto t1 = chrono::high_resolution_clock::now();
     nuskaityti_is_failo(studentai, failo_pavadinimas);
@@ -182,7 +179,8 @@ void programa(string konteinerio_pavadinimas){
         cin>>failo_pavadinimas;
     nuskaityti_is_failo(studentai, failo_pavadinimas);
     rasyti_i_faila_pagal_pazymi(studentai, "galutinis.txt");
-        } else if (pasirinkimas == 8){
+    cout<<"Galutiniai balai issaugoti i faila galutinis.txt"<<endl;
+    } else if (pasirinkimas == 8){
         string failo_pavadinimas;
         cout<<"iveskite sugeneruoto failo pavadinima (pvz. studentai1000.txt): "<<endl;
         cin>>failo_pavadinimas;
@@ -241,6 +239,7 @@ void programa(string konteinerio_pavadinimas){
     }
 
 }
+
 int main() {
     srand(time(0));
 
