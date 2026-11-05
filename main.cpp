@@ -12,6 +12,18 @@
 #include "funkcijos.h"
 using namespace std;
 
+int pasirinkti_strategija(){
+    int strategija;
+    cout<<"kokia dalijimo strategija naudoti?"<<endl;
+    cout<<"1 - kopijuoti i du naujus konteinerius (vargsiukai ir kietiakiai)"<<endl;
+    cout<<"2 - perkelti vargsiukus i nauja konteineri ir trinti po viena"<<endl;
+    cout<<"3 - 2 strategija su efektyviais algoritmais (stable_partition)"<<endl;
+    cin>>strategija;
+    if(strategija < 1 || strategija > 3){
+        strategija = 3;
+    }
+    return strategija;
+}
 template <typename Konteineris>
 void programa(string konteinerio_pavadinimas){
     Konteineris studentai;
