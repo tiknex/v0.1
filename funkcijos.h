@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <iterator>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -134,6 +135,34 @@ void padalinti(Konteineris& studentai, Konteineris& vargsiukai, Konteineris& kie
             vargsiukai.push_back(s);
         } else {
             kietiakiai.push_back(s);
+        }
+    }
+}
+bool yra_vargsiukas(Studentas& s){
+    return vidurkis(s.nd_rezultatai, s.egz_rezultatai) < 5.0;
+}
+template <typename Konteineris>
+void strategija_1(Konteineris& studentai, Konteineris& vargsiukai, Konteineris& kietiakiai){
+    vargsiukai.clear();
+    kietiakiai.clear();
+    for(auto& s : studentai){
+        if(yra_vargsiukas(s)){
+            vargsiukai.push_back(s);
+        } else {
+            kietiakiai.push_back(s);
+        }
+    }
+}
+template <typename Konteineris>
+void strategija_2(Konteineris& studentai, Konteineris& vargsiukai){
+    vargsiukai.clear();
+    auto it = studentai.begin();
+    while(it != studentai.end()){
+        if(yra_vargsiukas(*it)){
+            vargsiukai.push_back(*it);
+            it = studentai.erase(it);   // erase grazina iteratoriu i kita elementa
+        } else {
+            ++it;
         }
     }
 }
