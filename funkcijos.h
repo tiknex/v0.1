@@ -125,19 +125,6 @@ void generuoti_faila(int studentu_kiekis, string failo_pavadinimas){
     }
     failas.close();
 }
-template <typename Konteineris>
-void padalinti(Konteineris& studentai, Konteineris& vargsiukai, Konteineris& kietiakiai){
-    vargsiukai.clear();
-    kietiakiai.clear();
-        for(auto& s : studentai){
-        double galutinis = vidurkis(s.nd_rezultatai, s.egz_rezultatai);
-        if(galutinis < 5.0){
-            vargsiukai.push_back(s);
-        } else {
-            kietiakiai.push_back(s);
-        }
-    }
-}
 bool yra_vargsiukas(Studentas& s){
     return vidurkis(s.nd_rezultatai, s.egz_rezultatai) < 5.0;
 }
