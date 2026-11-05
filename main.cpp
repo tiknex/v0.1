@@ -140,18 +140,20 @@ void programa(string konteinerio_pavadinimas){
         cin>>failo_pavadinimas;
         nuskaityti_is_failo(studentai, failo_pavadinimas);
         cout<<"Duomenys nuskaityti is failo, ivesta studentu: "<<studentai.size()<<endl;
-    } else if(pasirinkimas == 6){
+     } else if(pasirinkimas == 6){
     string failo_pavadinimas;
     cout<<"iveskite sugeneruoto failo pavadinima (pvz. studentai1000.txt): "<<endl;
     cin>>failo_pavadinimas;
-
+ 
     int budas;
     cout<<"kaip rusiuoti rezultatus? 1 - pagal pazymi (didejancia tvarka), 2 - pagal varda"<<endl;
     cin>>budas;
-
+ 
+    int strategija = pasirinkti_strategija();
+ 
     Konteineris vargsiukai;
     Konteineris kietiakiai;
-
+ 
     auto t1 = chrono::high_resolution_clock::now();
     nuskaityti_is_failo(studentai, failo_pavadinimas);
     auto t2 = chrono::high_resolution_clock::now();
@@ -159,27 +161,29 @@ void programa(string konteinerio_pavadinimas){
         cout<<"Faile nera studentu."<<endl; 
         continue;
     }
-
-    
-    padalinti(studentai, vargsiukai, kietiakiai);
+    size_t viso = studentai.size();
+ 
+    // kiet - konteineris, kuriame po padalinimo yra kietiakiai
+    Konteineris& kiet = padalinti(strategija, studentai, vargsiukai, kietiakiai);
     auto t3 = chrono::high_resolution_clock::now();
     
     rusiuoti(vargsiukai, budas);
-    rusiuoti(kietiakiai, budas);
+    rusiuoti(kiet, budas);
     auto t4 = chrono::high_resolution_clock::now();
-
+ 
     rasyti_i_faila_pagal_pazymi(vargsiukai, "vargsiukai.txt");
-    rasyti_i_faila_pagal_pazymi(kietiakiai, "kietiakiai.txt");
+    rasyti_i_faila_pagal_pazymi(kiet, "kietiakiai.txt");
     auto t5 = chrono::high_resolution_clock::now();
-
+ 
     chrono::duration<double> nuskaitymas = t2 - t1;
     chrono::duration<double> padalinimas = t3 - t2;
     chrono::duration<double> rusiavimas = t4 - t3;
     chrono::duration<double> isvedimas = t5 - t4;
-
-    cout<<"Studentu: "<<studentai.size()
+ 
+    cout<<"Studentu: "<<viso
         <<" (vargsiukai: "<<vargsiukai.size()
-        <<", kietiakiai: "<<kietiakiai.size()<<")"<<endl;
+        <<", kietiakiai: "<<kiet.size()<<")"
+        <<", strategija: "<<strategija<<endl;
     cout<<"Nuskaitymas is failo:     "<<nuskaitymas.count()<<" s"<<endl;
     cout<<"Padalinimas i 2 grupes:   "<<padalinimas.count()<<" s"<<endl;
     cout<<"Rusiavimas:               "<<rusiavimas.count()<<" s"<<endl;
