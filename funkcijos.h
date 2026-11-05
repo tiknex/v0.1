@@ -167,6 +167,15 @@ void strategija_2(Konteineris& studentai, Konteineris& vargsiukai){
     }
 }
 template <typename Konteineris>
+void strategija_3(Konteineris& studentai, Konteineris& vargsiukai){
+    vargsiukai.clear();
+    auto riba = stable_partition(studentai.begin(), studentai.end(),
+                          [](Studentas& s){ return !yra_vargsiukas(s); });
+    // move_iterator - studentai perkeliami, o ne kopijuojami (greiciau)
+    vargsiukai.assign(make_move_iterator(riba), make_move_iterator(studentai.end()));
+    studentai.erase(riba, studentai.end());
+}
+template <typename Konteineris>
 void rasyti_i_faila_pagal_pazymi(Konteineris& studentai, string isvesties_failas){
     ofstream failas(isvesties_failas);
     if(!failas){
