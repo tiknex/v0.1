@@ -103,11 +103,11 @@ Testuota su tais pačiais anksčiau sugeneruotais failais (1 000, 10 000, 100 00
 
 | Įrašų kiekis | 1 strategija | 2 strategija | 3 strategija |
 |---:|---:|---:|---:|
-| 1 000 | ... | ... | ... |
-| 10 000 | ... | ... | ... |
-| 100 000 | ... | ... | ... |
-| 1 000 000 | ... | netestuota* | ... |
-| 10 000 000 | ... | netestuota* | ... |
+| 1 000 | 0.001038 s | 0.0179011 s | 0.0003051 s |
+| 10 000 |  0.0128495 s |  1.61785 s | 0.0044307 s |
+| 100 000 | 0.132819 s | 157.011 s | 0.0776445 s |
+| 1 000 000 | 0.98303 s | * | 0.377603 s |
+| 10 000 000 |  15.4931 s | * | 3.89215 s |
 
 \* `vector` su 2 strategija kiekvienas `erase()` pastumia visus po ištrinto esančius elementus. Laikas auga kvadratiškai: įrašų 10 kartų daugiau – laikas apie 80–100 kartų ilgesnis. Su 1 000 000 įrašų tai užtruktų kelias valandas, todėl testuota tik iki 100 000.
 
@@ -115,30 +115,20 @@ Testuota su tais pačiais anksčiau sugeneruotais failais (1 000, 10 000, 100 00
 
 | Įrašų kiekis | 1 strategija | 2 strategija | 3 strategija |
 |---:|---:|---:|---:|
-| 1 000 | ... | ... | ... |
-| 10 000 | ... | ... | ... |
-| 100 000 | ... | ... | ... |
-| 1 000 000 | ... | ... | ... |
-| 10 000 000 | ... | ... | ... |
+| 1 000 | 0.0012473 s | 0.0006318 s | 0.0005204 s |
+| 10 000 | 0.0141962 s | 0.0065537 s | 0.0058129 s |
+| 100 000 | 0.158431 s | 0.0712846 s | 0.0649318 s |
+| 1 000 000 | 1.35274 s	 | 0.741592 s | 0.623781 s |
+| 10 000 000 | 14.0816 s | 7.93105 s | 6.71448 s |
 
 ### Visų žingsnių trukmė su greičiausia strategija (s)
 
 | Įrašų kiekis | Konteineris | Nuskaitymas | Padalinimas | Rūšiavimas | Išvedimas |
 |---:|---|---:|---:|---:|---:|
-| 1 000 000 | vector | ... | ... | ... | ... |
-| 1 000 000 | list | ... | ... | ... | ... |
-| 10 000 000 | vector | ... | ... | ... | ... |
-| 10 000 000 | list | ... | ... | ... | ... |
-
----
-
-## Ekrano nuotraukos
-
-![vector, 3 strategija, 1 000 000 įrašų](nuotraukos/vector_strategija3.png)
-
-![list, 2 strategija, 1 000 000 įrašų](nuotraukos/list_strategija2.png)
-
-![Studento adresas atmintyje](nuotraukos/adresas.png)
+| 1 000 000 | vector | 4.352 | 0.378 | 0.491 | 1.218 |
+| 1 000 000 | list | 4.617	 | 0.624 | 0.853 | 1.296 |
+| 10 000 000 | vector | 45.931 | 3.892	 | 4.402	 | 12.134 |
+| 10 000 000 | list | 48.706 | 6.714 | 11.238	 | 13.017 |
 
 ---
 
