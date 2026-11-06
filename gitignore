@@ -1,0 +1,19 @@
+# Sukompiliuoti failai
+*.exe
+*.o
+*.obj
+*.pdb
+*.ilk
+studentai
+build/
+
+# IDE nustatymai
+.vscode/
+desktop.ini
+
+# Programos sugeneruoti failai
+stud*.txt
+vargsiukai.txt
+kietiakiai.txt
+galutinis.txt
+rezultatai.txt
